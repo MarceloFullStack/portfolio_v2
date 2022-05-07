@@ -11,6 +11,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
+import styled from "styled-components";
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 
@@ -70,9 +71,16 @@ export default function SimpleDialogDemo() {
         setOpen(false);
         setSelectedValue(value);
     };
-
+    const Container = styled.div`
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     height: 100vh;
+     width: 100vw;
+     `;
     return (
-        <div>
+        <Container>
             <Typography variant="subtitle1" component="div">
                 Selected: {selectedValue}
             </Typography>
@@ -85,6 +93,6 @@ export default function SimpleDialogDemo() {
                 open={open}
                 onClose={handleClose}
             />
-        </div>
+        </Container>
     );
 }
