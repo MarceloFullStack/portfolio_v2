@@ -1,4 +1,4 @@
-### Iniciando projeto 
+### Iniciando projeto
     [Instalacao Nextjs + Typescript](https://nextjs.org/docs/basic-features/typescript)
 ### Instalacao Material ui V5
     [Instalacao Material ui V5](https://material-ui.com/getting-started/installation/)
