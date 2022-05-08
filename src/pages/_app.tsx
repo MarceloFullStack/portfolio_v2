@@ -8,11 +8,11 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import createEmotionCache from '../utility/createEmotionCache';
-import lightThemeOptions from '../styles/theme/lightThemeOptions';
-import '../styles/globals.css';
+import createEmotionCache from '../../utility/createEmotionCache';
+import lightThemeOptions from '../../styles/theme/lightThemeOptions';
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
+import '../../styles/globals.css';
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
