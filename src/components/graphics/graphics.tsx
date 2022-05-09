@@ -5,11 +5,16 @@ import {
     Series,
     ArgumentAxis,
     Legend,
-    Label, Tooltip, Title,
+    Label, Tooltip, Title, ValueAxis, Tick,
 } from 'devextreme-react/chart';
 import { overlappingModes, population } from '../../data';
 console.log('population', population);
 
+function customizeTooltip(arg) {
+    return {
+        text: `${arg.valueText}${'%'}`,
+    };
+}
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -18,6 +23,7 @@ class App extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
     }
+
     render() {
         return (
             <React.Fragment>
@@ -28,7 +34,9 @@ class App extends React.Component {
                     palette="Violet"
                 >
                     <Series argumentField="key" type={'stackedspline'} valueField={`percent`} name={'vaca'}>
-                        <Label visible={true} connector={'curve'} />
+                        <Label visible={true} connector={'curve'} customizeText={(e)=>{
+                            return `${(e.valueText / 100 * 100).toFixed(2)}${'%'}`;
+                        }}/>
                     </Series>
                     <ArgumentAxis >
                         <Label
@@ -36,13 +44,22 @@ class App extends React.Component {
                             overlappingBehavior={this.state.currentMode}
                             rotationAngle={-45}
 
+
                         />
                     </ArgumentAxis>
-                    <Legend visible={false} />
-                    <Legend visible={false} />
+                    <ValueAxis>
+                        <Tick visible={true} />
+                        <Label visible={true}  customizeText={(item) => {
+                            return item.value + '%';
+                        }}/>
+                    </ValueAxis>
+                    <Legend visible={false} customizeText={(item) => {
+                        return item.value + '%';
+                    }}/>
+                    <Legend visible={true} />
                     <Tooltip
                         enabled={true}
-                        // customizeTooltip={customizeTooltip}
+                        customizeTooltip={customizeTooltip} />
                     />
                     <Title text="Weather in Las Vegas, NV (2017)" />
                 </Chart>
