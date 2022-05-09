@@ -1,20 +1,27 @@
 import React from 'react';
 import SelectBox from 'devextreme-react/select-box';
 import {
-    Chart,
-    Series,
     ArgumentAxis,
-    Legend,
-    Label, Tooltip, Title, ValueAxis, Tick,
+    Chart,
+    Export, Font,
+    Label,
+    Legend, Margin,
+    Series,
+    Tick,
+    Title,
+    Tooltip,
+    ValueAxis,
 } from 'devextreme-react/chart';
-import { overlappingModes, population } from '../../data';
+import {overlappingModes, population} from '../../data';
+
 console.log('population', population);
 
-function customizeTooltip(arg) {
+function customizeTooltip(arg: { valueText: any; }) {
     return {
         text: `${arg.valueText}${'%'}`,
     };
 }
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -30,38 +37,44 @@ class App extends React.Component {
                 <Chart
                     id="chart"
                     dataSource={population}
-                    title="Population by Countries"
                     palette="Violet"
                 >
-                    <Series argumentField="key" type={'stackedspline'} valueField={`percent`} name={'vaca'}>
-                        <Label visible={true} connector={'curve'} customizeText={(e)=>{
+                    <Title text="Linguagens mais utilizadas">
+                        <Font size={30} color="#CFB53B" />
+                        <Margin top={25} />
+                    </Title>
+                    <Series argumentField="key" type={'stackedspline'} valueField={`percent`} name={'Linguagens'}>
+                        <Label visible={true} connector={'curve'} customizeText={(e: { valueText: number; }) => {
                             return `${(e.valueText / 100 * 100).toFixed(2)}${'%'}`;
                         }}/>
                     </Series>
-                    <ArgumentAxis >
+                    <ArgumentAxis>
                         <Label
                             wordWrap="none"
                             overlappingBehavior={this.state.currentMode}
                             rotationAngle={-45}
-
-
                         />
                     </ArgumentAxis>
                     <ValueAxis>
-                        <Tick visible={true} />
-                        <Label visible={true}  customizeText={(item) => {
+                        <Tick visible={true}/>
+                        <Label visible={true} customizeText={(item) => {
                             return item.value + '%';
                         }}/>
                     </ValueAxis>
                     <Legend visible={false} customizeText={(item) => {
                         return item.value + '%';
                     }}/>
-                    <Legend visible={true} />
+                    <Legend visible={true}
+                            verticalAlignment="bottom"
+                            horizontalAlignment="center"
+                            itemTextPosition="right"
+                            rowCount={2}/>
+
                     <Tooltip
                         enabled={true}
-                        customizeTooltip={customizeTooltip} />
-                    />
-                    <Title text="Weather in Las Vegas, NV (2017)" />
+                        customizeTooltip={customizeTooltip}/>
+                    <Export enabled={true} />
+
                 </Chart>
                 <div className="options">
                     <div className="caption">Options</div>
@@ -79,7 +92,7 @@ class App extends React.Component {
     }
 
     handleChange(e) {
-        this.setState({ currentMode: e.value });
+        this.setState({currentMode: e.value});
     }
 }
 
