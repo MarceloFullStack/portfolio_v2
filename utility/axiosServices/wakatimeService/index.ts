@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
+import {dateNow, dateNowMinusSeven} from "../../dates";
 
 const httpClient = axios.create({
     baseURL: "https://wakatime.com/api/v1/", // baseURL: process.env.APP_API_BASE_URL,
@@ -14,23 +15,25 @@ export const wakatimeService = {
     getWakatime: async (): Promise<AxiosResponse<any>> => {
         let filter: 'last_7_days' | 'last_30_days' = "last_7_days"
         try {
-            const response = await httpClient.get(`users/MarceloFullstack/stats/${filter}`);
+            const response = await httpClient.get(`users/current/languages`);
+            // const response = await httpClient.get(`users/MarceloFullstack/stats/${filter}`);
             return Promise.resolve(response.data.data);
         } catch (error) {
             return Promise.reject(error);
         }
     },
-    getWakatimeProjects: async (): Promise<AxiosResponse<any>> => {
+    getFastData: async (): Promise<AxiosResponse<any>> => {
         try {
-            const response = await httpClient.get('users/current/projects');
-            return response;
+            return await httpClient.get(`https://wakatime.com/api/v1/users/5ba4f38e-d1c5-4872-9196-3b7a657a801a/stats/last_7_days?timeout=15&heavy_cached=true`);
         } catch (error) {
             return Promise.reject(error);
         }
     },
-    getWakatimeLanguages: async (): Promise<AxiosResponse<any>> => {
+    getWakatimeDetalhamento: async (): Promise<AxiosResponse<any>> => {
+        let now = dateNow();
+        let lastWeek = dateNowMinusSeven()
         try {
-            const response = await httpClient.get('users/current/languages');
+            const response = await httpClient.get(`users/current/summaries?start=${lastWeek}&end=${now}&cache=true&paywalled=true`);
             return response.data.data;
         } catch (error) {
             return Promise.reject(error);

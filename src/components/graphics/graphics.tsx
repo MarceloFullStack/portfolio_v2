@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+
 import SelectBox from 'devextreme-react/select-box';
 import {
     ArgumentAxis,
     Chart,
-    Export, Font,
+    Export,
+    Font,
     Label,
-    Legend, Margin,
+    Legend,
+    Margin,
     Series,
     Tick,
     Title,
@@ -13,6 +16,7 @@ import {
     ValueAxis,
 } from 'devextreme-react/chart';
 import {overlappingModes, population} from '../../data';
+import {Language} from "../../pages";
 
 console.log('population', population);
 
@@ -22,78 +26,80 @@ function customizeTooltip(arg: { valueText: any; }) {
     };
 }
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentMode: overlappingModes[0],
-        };
-        this.handleChange = this.handleChange.bind(this);
-    }
+const App: React.FunctionComponent<any> = ({languages, today}) => {
+    console.log('languages', languages);
+    console.log('today', today);
+    const [payloadGrpah, setPayloadGraph] = React.useState(languages);
+    const overlappingModes = ['hoje', 'ontem', 'semana'];
 
-    render() {
-        return (
-            <React.Fragment>
-                <Chart
-                    id="chart"
-                    dataSource={population}
-                    palette="Violet"
-                >
-                    <Title text="Linguagens mais utilizadas">
-                        <Font size={30} color="#CFB53B" />
-                        <Margin top={25} />
-                    </Title>
-                    <Series argumentField="key" type={'stackedspline'} valueField={`percent`} name={'Linguagens'}>
-                        <Label visible={true} connector={'curve'} customizeText={(e: { valueText: number; }) => {
-                            return `${(e.valueText / 100 * 100).toFixed(2)}${'%'}`;
-                        }}/>
-                    </Series>
-                    <ArgumentAxis>
-                        <Label
-                            wordWrap="none"
-                            overlappingBehavior={this.state.currentMode}
-                            rotationAngle={-45}
-                        />
-                    </ArgumentAxis>
-                    <ValueAxis>
-                        <Tick visible={true}/>
-                        <Label visible={true} customizeText={(item) => {
-                            return item.value + '%';
-                        }}/>
-                    </ValueAxis>
-                    <Legend visible={false} customizeText={(item) => {
+    const [changeView, setChangeView] = React.useState('semana');
+    function handleChange(e: any) {
+        setChangeView(e.value);
+    }
+    useEffect(() => {
+        if(changeView === 'hoje'){
+            return setPayloadGraph(today[7].languages);
+        }
+        if(changeView === 'ontem'){
+            return setPayloadGraph(today[6].languages);
+        }
+        if(changeView === 'semana'){
+            return setPayloadGraph(languages);
+        }
+    }, [changeView]);
+    return (
+        <React.Fragment>
+            <Chart
+                id="chart"
+                dataSource={payloadGrpah}
+                palette="Violet"
+            >
+                <Title text="Linguagens mais utilizadas">
+                    <Font size={30} color="#D1A1D1"/>
+                    <Margin top={25}/>
+                </Title>
+                <Series argumentField="name" type={'stackedspline'} valueField={`percent`} name={'Linguagens'}>
+                    <Label visible={true} connector={'curve'} customizeText={(e: { valueText: number; }) => {
+                        return `${(e.valueText / 100 * 100).toFixed(2)}${'%'}`;
+                    }}/>
+                </Series>
+                <ArgumentAxis>
+                    <Label
+                        wordWrap="none"
+                        overlappingBehavior={'rotate'}
+                        rotationAngle={-45}
+                    />
+                </ArgumentAxis>
+                <ValueAxis>
+                    <Tick visible={true}/>
+                    <Label visible={true} customizeText={(item: any) => {
                         return item.value + '%';
                     }}/>
-                    <Legend visible={true}
-                            verticalAlignment="bottom"
-                            horizontalAlignment="center"
-                            itemTextPosition="right"
-                            rowCount={2}/>
+                </ValueAxis>
+                <Legend visible={true}
+                        verticalAlignment="bottom"
+                        horizontalAlignment="center"
+                        itemTextPosition="right"
+                        rowCount={2}/>
 
-                    <Tooltip
-                        enabled={true}
-                        customizeTooltip={customizeTooltip}/>
-                    <Export enabled={true} />
+                <Tooltip
+                    enabled={true}
+                    customizeTooltip={customizeTooltip}/>
+                <Export enabled={true}/>
 
-                </Chart>
-                <div className="options">
-                    <div className="caption">Options</div>
-                    <div className="option">
-                        <span>Overlapping Modes: </span>
-                        <SelectBox
-                            dataSource={overlappingModes}
-                            value={this.state.currentMode}
-                            onValueChanged={this.handleChange}
-                        />
-                    </div>
+            </Chart>
+            <div className="options">
+                <div className="caption">Espaço de tempo</div>
+                <div className="option">
+                    {/*<span>Escolha o tempo: </span>*/}
+                    <SelectBox
+                        dataSource={overlappingModes}
+                        value={changeView}
+                        onValueChanged={handleChange}
+                    />
                 </div>
-            </React.Fragment>
-        );
-    }
-
-    handleChange(e) {
-        this.setState({currentMode: e.value});
-    }
+            </div>
+        </React.Fragment>
+    );
 }
-
 export default App;
