@@ -15,6 +15,7 @@ import {
     Tooltip,
     ValueAxis,
 } from 'devextreme-react/chart';
+import styled from "styled-components";
 
 
 function customizeTooltip(arg: { valueText: any; }) {
@@ -24,7 +25,10 @@ function customizeTooltip(arg: { valueText: any; }) {
 }
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/Charts/Line/React/Light/
-
+const Container = styled.div`
+  min-width: 800px;
+  padding: 50px;
+`;
 const App: React.FunctionComponent<any> = ({languages, today}) => {
     const [payloadGrpah, setPayloadGraph] = React.useState(languages);
     const overlappingModes = ['hoje', 'ontem', 'semana'];
@@ -47,7 +51,7 @@ const App: React.FunctionComponent<any> = ({languages, today}) => {
         }
     }, [changeView]);
     return (
-        <React.Fragment>
+        <Container>
             <Chart
                 id="chart"
                 dataSource={payloadGrpah}
@@ -98,7 +102,7 @@ const App: React.FunctionComponent<any> = ({languages, today}) => {
                     />
                 </div>
             </div>
-        </React.Fragment>
+        </Container>
     );
 }
 export default App;

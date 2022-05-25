@@ -7,11 +7,18 @@ export const SSidebar = styled.div`
   width: ${({isOpen}) => (!isOpen ? `auto` : v.sidebarWidth)};
   background: ${({theme}) => theme.bg};
   height: 100vh;
-  min-height: 100%;
+  //min-height: 100%;
   padding: ${v.lgSpacing};
   background: #111A20;
   color: #fff;
   position: relative;
+  
+  @media (max-width: 600px) {
+    position: fixed;
+    //height fill-available
+    height: fill-available;
+    
+  }
 `;
 
 export const SSidebarButton = styled.button`
