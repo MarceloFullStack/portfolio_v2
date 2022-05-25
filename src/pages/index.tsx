@@ -1,8 +1,6 @@
 import Layout from "../components/Layout/Layout";
 import Graphics from "../components/graphics/graphics";
 import {Grid} from "@mui/material";
-import {useEffect} from "react";
-import axios from "axios";
 import {wakatimeService} from '../../utility/axiosServices/wakatimeService';
 
 
@@ -101,11 +99,9 @@ export default function Index({statistics, detail} : {statistics: Statistics, de
             data: {editors},
 
         } = statistics;
-        console.log('detalhes', detail[7]?.languages);
     return (
         <div>
             <Layout>
-                {/*<h1 style={{padding: 50}}>Hello Next.js</h1>*/}
                 <Grid container style={{width: '90vw'}} justifyContent={'center'} justifyItems={'center'}
                       alignItems={'center'} alignContent={'center'}>
                     <Grid item xs={12}>

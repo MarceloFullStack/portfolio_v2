@@ -121,20 +121,20 @@ const linksArray = [
         label: "Sobre",
         icon: <MdOutlineAnalytics/>,
         to: "/sobre",
-        notification: 3,
+        notification: 0
     },
-    {
-        label: "Customers",
-        icon: <BsPeople/>,
-        to: "/customers",
-        notification: 0,
-    },
-    {
-        label: "Diagrams",
-        icon: <AiOutlineApartment/>,
-        to: "/diagrams",
-        notification: 1,
-    },
+    // {
+    //     label: "Customers",
+    //     icon: <BsPeople/>,
+    //     to: "/customers",
+    //     notification: 0,
+    // },
+    // {
+    //     label: "Diagrams",
+    //     icon: <AiOutlineApartment/>,
+    //     to: "/diagrams",
+    //     notification: 1,
+    // },
 ];
 
 const secondaryLinksArray = [

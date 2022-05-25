@@ -15,10 +15,7 @@ import {
     Tooltip,
     ValueAxis,
 } from 'devextreme-react/chart';
-import {overlappingModes, population} from '../../data';
-import {Language} from "../../pages";
 
-console.log('population', population);
 
 function customizeTooltip(arg: { valueText: any; }) {
     return {
@@ -26,24 +23,26 @@ function customizeTooltip(arg: { valueText: any; }) {
     };
 }
 
+// https://js.devexpress.com/Demos/WidgetsGallery/Demo/Charts/Line/React/Light/
+
 const App: React.FunctionComponent<any> = ({languages, today}) => {
-    console.log('languages', languages);
-    console.log('today', today);
     const [payloadGrpah, setPayloadGraph] = React.useState(languages);
     const overlappingModes = ['hoje', 'ontem', 'semana'];
 
     const [changeView, setChangeView] = React.useState('semana');
+
     function handleChange(e: any) {
         setChangeView(e.value);
     }
+
     useEffect(() => {
-        if(changeView === 'hoje'){
+        if (changeView === 'hoje') {
             return setPayloadGraph(today[7].languages);
         }
-        if(changeView === 'ontem'){
+        if (changeView === 'ontem') {
             return setPayloadGraph(today[6].languages);
         }
-        if(changeView === 'semana'){
+        if (changeView === 'semana') {
             return setPayloadGraph(languages);
         }
     }, [changeView]);

@@ -7,6 +7,7 @@ export const SSidebar = styled.div`
   width: ${({isOpen}) => (!isOpen ? `auto` : v.sidebarWidth)};
   background: ${({theme}) => theme.bg};
   height: 100vh;
+  min-height: 100%;
   padding: ${v.lgSpacing};
   background: #111A20;
   color: #fff;
