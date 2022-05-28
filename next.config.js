@@ -11,7 +11,11 @@ const nextConfig = {
         // your project has type errors.
         // !! WARN !!
         ignoreBuildErrors: true
-    }
+    },
+    experimental: {
+        outputStandalone: true
+    },
+    trailingSlash: true
 }
 
 module.exports = nextConfig
