@@ -43,3 +43,5 @@ yarn-error.log*
 /.idea/sonarlint/issuestore/c/9/c9a23308a93c267d84e45423bbba4c89a6c9141b
 /.idea/sonarlint/issuestore/d/2/d2d3bb60cab7e8c869b5fdf0a820b7edf2fc7859
 /.idea/sonarlint/issuestore/index.pb
+.idea
+
