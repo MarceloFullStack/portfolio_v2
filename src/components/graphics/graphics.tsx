@@ -3,13 +3,13 @@ import React, {useEffect} from 'react';
 import SelectBox from 'devextreme-react/select-box';
 import {
     ArgumentAxis,
-    Chart,
+    Chart, CommonSeriesSettings,
     Export,
     Font,
     Label,
     Legend,
     Margin,
-    Series, SeriesTemplate,
+    Series, SeriesTemplate, Subtitle,
     Tick,
     Title,
     Tooltip,
@@ -31,9 +31,9 @@ const Container = styled.div`
 `;
 const App: React.FunctionComponent<any> = ({allTimeLanguageShare, last7DaysShare}) => {
     const [payloadGrpah, setPayloadGraph] = React.useState([]);
-    const [graphType, setGraphType] = React.useState('stackedspline');
+    const [graphType, setGraphType] = React.useState('bar');
 
-    const typeGraphModes = ['stackedspline', 'bar'];
+    const typeGraphModes = ['stackedspline', 'bar', 'line'];
     const overlappingModes = ['Semana', 'Todo o tempo'];
     const [changeView, setChangeView] = React.useState('Semana');
 
@@ -60,12 +60,26 @@ const App: React.FunctionComponent<any> = ({allTimeLanguageShare, last7DaysShare
             <Chart
                 id="chart"
                 dataSource={payloadGrpah}
-                palette="Soft"
+                palette="Violet"
             >
-                <Title text={`Linguagens mais utilizadas - ${changeView}`}>
-                    <Font size={30} color="#D1A1D1"/>
-                    <Margin top={25}/>
+                <CommonSeriesSettings
+                    argumentField="name"
+                    valueField="percent"
+                    type={graphType}
+                    ignoreEmptyPoints={true}
+                />
+
+                <SeriesTemplate nameField="name" />
+                <Title
+                    text={`Linguagens mais utilizadas - ${changeView}`}
+
+                >
+                    <Font size={25} color={'#D1A1D1'} />
+                    <Subtitle  text="Porcentagem de tempo gasto em cada linguagem" color={'white'}>
+                    <Font color={"#9b779b"} />
+                    </Subtitle>
                 </Title>
+
                 <Series argumentField="name" type={graphType} valueField={`percent`} name={'Linguagens'}>
                     <Label visible={true}  customizeText={(e: { valueText: number; }) => {
                         return `${(e.valueText / 100 * 100).toFixed(2)}${'%'}`;
@@ -94,7 +108,7 @@ const App: React.FunctionComponent<any> = ({allTimeLanguageShare, last7DaysShare
                     enabled={true}
                     customizeTooltip={customizeTooltip}/>
                 <Export enabled={true}/>
-                {/*<SeriesTemplate nameField="name"  />*/}
+                <SeriesTemplate nameField="name"  />
             </Chart>
             <div className="options">
                 <div className="caption">Espaço de tempo</div>
@@ -107,17 +121,17 @@ const App: React.FunctionComponent<any> = ({allTimeLanguageShare, last7DaysShare
                     />
                 </div>
             </div>
-            <div className="options">
-                <div className="caption">Tipo do gráfico</div>
-                <div className="option">
-                    {/*<span>Escolha o tempo: </span>*/}
-                    <SelectBox
-                        dataSource={typeGraphModes}
-                        value={graphType}
-                        onValueChanged={handleChangeTypeGraph}
-                    />
-                </div>
-            </div>
+            {/*<div className="options">*/}
+            {/*    <div className="caption">Tipo do gráfico</div>*/}
+            {/*    <div className="option">*/}
+            {/*        /!*<span>Escolha o tempo: </span>*!/*/}
+            {/*        <SelectBox*/}
+            {/*            dataSource={typeGraphModes}*/}
+            {/*            value={graphType}*/}
+            {/*            onValueChanged={handleChangeTypeGraph}*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </Container>
     );
 }
