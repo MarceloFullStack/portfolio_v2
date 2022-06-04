@@ -16,6 +16,7 @@ import {
     ValueAxis,
 } from 'devextreme-react/chart';
 import styled from "styled-components";
+import GraphicCodingActivity from "./graphicCodingActivity";
 
 
 function customizeTooltip(arg: { valueText: any; }) {
@@ -132,6 +133,7 @@ const App: React.FunctionComponent<any> = ({allTimeLanguageShare, last7DaysShare
             {/*        />*/}
             {/*    </div>*/}
             {/*</div>*/}
+
         </Container>
     );
 }

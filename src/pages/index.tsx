@@ -2,6 +2,7 @@ import Layout from "../components/Layout/Layout";
 import Graphics from "../components/graphics/graphics";
 import {Grid} from "@mui/material";
 import {wakatimeService} from '../../utility/axiosServices/wakatimeService';
+import GraphicCodingActivity from "../components/graphics/graphicCodingActivity";
 
 export default function Index({allTimeLanguage, last7DaysLanguage} : {allTimeLanguage: Array<any>, last7DaysLanguage: Array<any>}) {
 
