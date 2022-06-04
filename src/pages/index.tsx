@@ -90,22 +90,15 @@ import {wakatimeService} from '../../utility/axiosServices/wakatimeService';
         statistics: Statistics;
     }
 
-export default function Index({statistics, detail} : {statistics: Statistics, detail: any}) {
-        const {
-            data: {human_readable_daily_average},
-            data: {categories},
-            data:  {languages},
-            data: {operating_systems},
-            data: {editors},
-
-        } = statistics;
+export default function Index({allTimeLanguage, last7DaysLanguage} : {allTimeLanguage: Array<any>, last7DaysLanguage: Array<any>}) {
+console.log('last7DaysLanguage', last7DaysLanguage);
     return (
         <div>
             <Layout>
                 <Grid container style={{width: '90vw'}} justifyContent={'center'} justifyItems={'center'}
                       alignItems={'center'} alignContent={'center'}>
                     <Grid item xs={12}>
-                        <Graphics languages={languages} today={detail ?? []}/>
+                        <Graphics allTimeLanguageShare={allTimeLanguage} last7DaysShare={last7DaysLanguage}/>
                     </Grid>
                 </Grid>
             </Layout>
@@ -113,17 +106,12 @@ export default function Index({statistics, detail} : {statistics: Statistics, de
     );
 }
 export const getServerSideProps = async () => {
-
-    try {
-        const statistcs = await wakatimeService.getFastData();
-        const detail = await wakatimeService.getWakatimeDetalhamento();
-        return {
-            props: {
-                statistics: statistcs.data,
-                detail
-            }
+        const allTime = await wakatimeService.getWakatimeAlltimeLanguage()
+        const last7Days = await wakatimeService.getWakatimeLast7Days();
+    return {
+        props: {
+            allTimeLanguage: allTime.data,
+            last7DaysLanguage: last7Days.data
         }
-    } catch (e) {
-        console.log(e);
     }
 };

@@ -9,7 +9,7 @@ import {
     Label,
     Legend,
     Margin,
-    Series,
+    Series, SeriesTemplate,
     Tick,
     Title,
     Tooltip,
@@ -29,40 +29,45 @@ const Container = styled.div`
   min-width: 800px;
   padding: 50px;
 `;
-const App: React.FunctionComponent<any> = ({languages, today}) => {
-    const [payloadGrpah, setPayloadGraph] = React.useState(languages);
-    const overlappingModes = ['hoje', 'ontem', 'semana'];
+const App: React.FunctionComponent<any> = ({allTimeLanguageShare, last7DaysShare}) => {
+    const [payloadGrpah, setPayloadGraph] = React.useState([]);
+    const [graphType, setGraphType] = React.useState('stackedspline');
 
-    const [changeView, setChangeView] = React.useState('semana');
+    const typeGraphModes = ['stackedspline', 'bar'];
+    const overlappingModes = ['Semana', 'Todo o tempo'];
+    const [changeView, setChangeView] = React.useState('Semana');
 
     function handleChange(e: any) {
         setChangeView(e.value);
     }
+    function handleChangeTypeGraph(e: any) {
+        setGraphType(e.value);
+    }
 
     useEffect(() => {
-        if (changeView === 'hoje') {
-            return setPayloadGraph(today[7].languages);
+        // if (changeView === 'hoje') {
+        //     return setPayloadGraph(today[7].languages);
+        // }
+        if (changeView === 'Semana') {
+            return setPayloadGraph(last7DaysShare);
         }
-        if (changeView === 'ontem') {
-            return setPayloadGraph(today[6].languages);
+        if (changeView === 'Todo o tempo') {
+            return setPayloadGraph(allTimeLanguageShare);
         }
-        if (changeView === 'semana') {
-            return setPayloadGraph(languages);
-        }
-    }, [changeView]);
+    }, [allTimeLanguageShare, changeView]);
     return (
         <Container>
             <Chart
                 id="chart"
                 dataSource={payloadGrpah}
-                palette="Violet"
+                palette="Soft"
             >
-                <Title text="Linguagens mais utilizadas">
+                <Title text={`Linguagens mais utilizadas - ${changeView}`}>
                     <Font size={30} color="#D1A1D1"/>
                     <Margin top={25}/>
                 </Title>
-                <Series argumentField="name" type={'stackedspline'} valueField={`percent`} name={'Linguagens'}>
-                    <Label visible={true} connector={'curve'} customizeText={(e: { valueText: number; }) => {
+                <Series argumentField="name" type={graphType} valueField={`percent`} name={'Linguagens'}>
+                    <Label visible={true}  customizeText={(e: { valueText: number; }) => {
                         return `${(e.valueText / 100 * 100).toFixed(2)}${'%'}`;
                     }}/>
                 </Series>
@@ -89,7 +94,7 @@ const App: React.FunctionComponent<any> = ({languages, today}) => {
                     enabled={true}
                     customizeTooltip={customizeTooltip}/>
                 <Export enabled={true}/>
-
+                {/*<SeriesTemplate nameField="name"  />*/}
             </Chart>
             <div className="options">
                 <div className="caption">Espaço de tempo</div>
@@ -99,6 +104,17 @@ const App: React.FunctionComponent<any> = ({languages, today}) => {
                         dataSource={overlappingModes}
                         value={changeView}
                         onValueChanged={handleChange}
+                    />
+                </div>
+            </div>
+            <div className="options">
+                <div className="caption">Tipo do gráfico</div>
+                <div className="option">
+                    {/*<span>Escolha o tempo: </span>*/}
+                    <SelectBox
+                        dataSource={typeGraphModes}
+                        value={graphType}
+                        onValueChanged={handleChangeTypeGraph}
                     />
                 </div>
             </div>
