@@ -99,6 +99,10 @@ export const SLinkContainer = styled.div`
 
   :hover {
     box-shadow: inset 0 0 0 1px ${({theme}) => theme.bg3};
+     cursor: alias;
+     cursor: hand;
+     background: ${({theme}) => theme.bg_icon};
+
   }
 `;
 

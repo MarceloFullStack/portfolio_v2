@@ -20,7 +20,7 @@ import {
 
 import avatar from "../../public/assets/avatar.png";
 import {AiOutlineApartment, AiOutlineHome, AiOutlineLeft, AiOutlineSearch, AiOutlineSetting,} from "react-icons/ai";
-import {MdLogout, MdOutlineAnalytics} from "react-icons/md";
+import {MdLogout, MdOutlineAnalytics, MdExtension} from "react-icons/md";
 import {BsPeople} from "react-icons/bs";
 
 import {ThemeContext} from "../index";
@@ -69,6 +69,7 @@ const Sidebar = () => {
             {linksArray.map(({icon, label, notification, to}) => (
                 <SLinkContainer key={label} isActive={pathname === to}>
                     <SLink href={to} style={!sidebarOpen ? {width: `fit-content`} : {}}>
+
                         <SLinkWarp>
                             <SLinkIcon>{icon}</SLinkIcon>
                             {sidebarOpen && (
@@ -121,6 +122,12 @@ const linksArray = [
         label: "Sobre",
         icon: <MdOutlineAnalytics/>,
         to: "/sobre",
+        notification: 0
+    },
+    {
+        label: "machine learning",
+        icon: <MdExtension/>,
+        to: "/machine-learning",
         notification: 0
     },
     // {

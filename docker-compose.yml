@@ -3,8 +3,10 @@ version: "3"
 services:
   app:
     image: marcelofullstack_portifolio_v2
+#    environment:
+#      - VIRTUAL_HOST=fotodelivery.com.br
+#      - VIRTUAL_PORT=3000
+#      - LETSENCRYPT_HOST=fotodelivery.com.br
+#      - LETSENCRYPT_EMAIL=fotofacil@live.com
     network_mode: "host"
     build: .
-
-#   expose:
-#     - "3000"
